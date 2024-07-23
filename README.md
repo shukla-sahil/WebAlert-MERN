@@ -2,7 +2,8 @@
 
 ## Project Overview
 
-This project involves creating a web application where users can monitor URLs, create and manage organizations, and collaborate with other users within those organizations. The application is built using Node.js with MongoDB as the database and React for the frontend.
+This project involves creating a web application where users can monitor URLs, create and manage organizations, and collaborate with other users within those organizations. Users can easily monitor multiple URLs, receive prompt email notifications in case of website is Down . The application is built using Node.js with
+MongoDB as the database and React for the frontend. 
 
 ## Features Added
 
