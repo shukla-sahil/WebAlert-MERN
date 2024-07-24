@@ -25,7 +25,7 @@ const HomePage = () => {
   return (
     <div className="flex flex-col items-center min-h-screen p-4 bg-gradient-to-r from-blue-500 to-purple-600">
       <nav className="w-full max-w-4xl flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-white">Website Monitor</h1>
+        <h1 className="text-3xl font-bold text-white">WebAlert</h1>
         <div>
           {isAuthenticated ? (
             <button onClick={handleLogout} className="text-white px-4 py-2 bg-red-600 rounded-lg hover:bg-red-700">
