@@ -55,37 +55,12 @@ const checkUrlStatus = async () => {
 };
 
 const handleUrlDown = async (org) => {
-  const failureCount = await getFailureCount(org.url);
-
-  if (failureCount < 2) {
-    await incrementFailureCount(org.url);
-    sendEmail(org.owner.email, 'URL Down Alert', `Your URL ${org.url} is down!`);
-  } else {
-    const usersEmails = org.users.map(user => user.email);
-    for (const email of usersEmails) {
-      sendEmail(email, 'URL Down Alert', `Your URL ${org.url} is still down! If you are deciding to no longer operate this URL, we suggest you remove it from your account.`);
-    }
-    await resetFailureCount(org.url);
+  const usersEmails = org.users.map(user => user.email);
+  for (const email of usersEmails) {
+    sendEmail(email, 'URL Down Alert', `Your URL ${org.url} is down! Please check the status of your URL.`);
   }
 };
 
-const getFailureCount = async (url) => {
-  const failureCount = await FailureCount.findOne({ url });
-  return failureCount ? failureCount.count : 0;
-};
-
-const incrementFailureCount = async (url) => {
-  const result = await FailureCount.findOneAndUpdate(
-    { url },
-    { $inc: { count: 1 } },
-    { new: true, upsert: true }
-  );
-  return result.count;
-};
-
-const resetFailureCount = async (url) => {
-  await FailureCount.findOneAndUpdate({ url }, { count: 0 });
-};
 
 // Set an interval to check URLs every 5 minutes
 setInterval(checkUrlStatus, 60000); // 5 minutes in milliseconds

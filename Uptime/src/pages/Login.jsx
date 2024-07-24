@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -19,6 +21,7 @@ const Login = () => {
       navigate('/dashboard');
     } catch (error) {
       console.error('Login failed:', error);
+      toast.error('Login failed. Please check your email and password.');
     }
   };
 
@@ -64,6 +67,7 @@ const Login = () => {
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

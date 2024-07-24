@@ -7,16 +7,22 @@ const Register = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(''); // State for managing validation error
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    if (!/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(email)) {
+      setError('Please enter a valid @gmail.com email address.');
+      return;
+    }
     try {
       await axios.post('http://localhost:5000/api/auth/register', { username, email, password });
       navigate('/login');
     } catch (error) {
       console.error('Registration failed:', error);
+      setError('Registration failed. Please try again.'); // Display error message
     }
   };
 
@@ -35,6 +41,7 @@ const Register = () => {
       <div className="relative flex items-center justify-center w-full max-w-md p-8 mx-auto bg-white rounded-lg shadow-lg">
         <form onSubmit={handleRegister} className="space-y-6">
           <h2 className="text-2xl font-semibold text-center">Register</h2>
+          {error && <p className="text-red-500 text-center">{error}</p>} {/* Display error message */}
           <div>
             <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
             <input
