@@ -1,9 +1,7 @@
-Certainly! Here's an updated version of your README to include all the new features and improvements:
 
----
 
 # Web Alert - URL Monitoring Application
-
+---
 ## Project Overview
 
 This project involves creating a web application where users can monitor URLs, create and manage organizations, and collaborate with other users within those organizations. Users can easily monitor multiple URLs and receive prompt email notifications if a website is down. The application is built using Node.js with MongoDB as the database and React for the frontend.
