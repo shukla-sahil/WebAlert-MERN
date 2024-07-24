@@ -12,7 +12,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const response = await axios.post('https://webalert-mern.onrender.com/api/auth/login', { email, password });
       const { token, username } = response.data; // Destructure the response data
 
       localStorage.setItem('token', token);

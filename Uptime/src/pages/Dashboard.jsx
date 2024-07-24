@@ -50,7 +50,7 @@ const Dashboard = () => {
 
     const fetchOrganizations = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/organizations', {
+            const response = await axios.get('https://webalert-mern.onrender.com/api/organizations', {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
             setOrganizations(response.data);
@@ -63,7 +63,7 @@ const Dashboard = () => {
 
     const checkOrgStatus = async (orgs = organizations) => {
         try {
-            const response = await axios.post('http://localhost:5000/api/status/check-status', {
+            const response = await axios.post('https://webalert-mern.onrender.com/api/status/check-status', {
                 organizations: orgs
             });
             setOrgStatus(response.data);
@@ -81,7 +81,7 @@ const Dashboard = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/api/organizations/create', {
+            const response = await axios.post('https://webalert-mern.onrender.com/api/organizations/create', {
                 name: newOrgName,
                 url: newOrgUrl,
             }, {
@@ -100,7 +100,7 @@ const Dashboard = () => {
     const handleAddUser = async (orgId) => {
         const username = usernames[orgId] || '';
         try {
-            const response = await axios.post('http://localhost:5000/api/organizations/addUser', {
+            const response = await axios.post('https://webalert-mern.onrender.com/api/organizations/addUser', {
                 username,
                 orgId,
             }, {
@@ -118,7 +118,7 @@ const Dashboard = () => {
 
     const handleDeleteOrganization = async (orgId) => {
         try {
-            const response = await axios.delete(`http://localhost:5000/api/organizations/${orgId}`, {
+            const response = await axios.delete(`https://webalert-mern.onrender.com/api/organizations/${orgId}`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
 

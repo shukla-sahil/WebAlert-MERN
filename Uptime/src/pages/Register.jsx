@@ -18,7 +18,7 @@ const Register = () => {
       return;
     }
     try {
-      await axios.post('http://localhost:5000/api/auth/register', { username, email, password });
+      await axios.post('https://webalert-mern.onrender.com/api/auth/register', { username, email, password });
       navigate('/login');
     } catch (error) {
       console.error('Registration failed:', error);
