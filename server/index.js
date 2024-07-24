@@ -62,8 +62,8 @@ const handleUrlDown = async (org) => {
 };
 
 
-// Set an interval to check URLs every 5 minutes
-setInterval(checkUrlStatus, 60000); // 5 minutes in milliseconds
+// Set an interval to check URLs every 4 minutes
+setInterval(checkUrlStatus, 240000); // 4 minutes in milliseconds
 
 // Start the Express server
 app.listen(process.env.PORT || 5000, () => {

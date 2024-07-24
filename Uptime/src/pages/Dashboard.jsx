@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode'; // Correctly import jwt-decode as a named import
 import classNames from 'classnames';
+import { ToastContainer, toast } from 'react-toastify'; // Import ToastContainer and toast
+import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
 
 const Dashboard = () => {
     const [organizations, setOrganizations] = useState([]);
@@ -71,6 +73,13 @@ const Dashboard = () => {
     };
 
     const handleCreateOrganization = async () => {
+        // Validate URL
+        const urlPattern = /^https:\/\/.+$/;
+        if (!urlPattern.test(newOrgUrl)) {
+            toast.error('URL must start with "https://".');
+            return;
+        }
+
         try {
             const response = await axios.post('http://localhost:5000/api/organizations/create', {
                 name: newOrgName,
@@ -81,9 +90,10 @@ const Dashboard = () => {
 
             console.log('Organization created:', response.data);
             await fetchOrganizations(); // Refresh organizations list and statuses
+            toast.success('Organization created successfully!');
         } catch (error) {
             console.error('Failed to create organization:', error);
-            alert(error.response?.data?.message || 'Failed to create organization');
+            toast.error(error.response?.data?.message || 'Failed to create organization');
         }
     };
 
@@ -99,9 +109,10 @@ const Dashboard = () => {
 
             console.log('User added:', response.data);
             await fetchOrganizations(); // Refresh organizations list and statuses
+            toast.success('User added successfully!');
         } catch (error) {
             console.error('Failed to add user:', error);
-            alert(error.response?.data?.message || 'Failed to add user');
+            toast.error(error.response?.data?.message || 'Failed to add user');
         }
     };
 
@@ -113,9 +124,10 @@ const Dashboard = () => {
 
             console.log('Organization deleted:', response.data);
             await fetchOrganizations(); // Refresh organizations list and statuses
+            toast.success('Organization deleted successfully!');
         } catch (error) {
             console.error('Failed to delete organization:', error);
-            alert(error.response?.data?.message || 'Failed to delete organization');
+            toast.error(error.response?.data?.message || 'Failed to delete organization');
         }
     };
 
@@ -140,6 +152,7 @@ const Dashboard = () => {
 
     return (
         <div className="flex flex-col items-center min-h-screen p-4 bg-purple-900">
+            <ToastContainer /> {/* Add ToastContainer here */}
             <div className="w-full max-w-3xl flex justify-between items-center mb-8">
                 <h1 className="text-4xl font-bold text-white">Welcome, {currentUser || 'User'}!</h1>
                 <button
