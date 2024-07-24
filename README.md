@@ -1,11 +1,17 @@
-# Application Summary
+Certainly! Here's an updated version of your README to include all the new features and improvements:
+
+---
+
+# Web Alert - URL Monitoring Application
 
 ## Project Overview
 
-This project involves creating a web application where users can monitor URLs, create and manage organizations, and collaborate with other users within those organizations. Users can easily monitor multiple URLs, receive prompt email notifications in case of website is Down . The application is built using Node.js with
-MongoDB as the database and React for the frontend. 
+This project involves creating a web application where users can monitor URLs, create and manage organizations, and collaborate with other users within those organizations. Users can easily monitor multiple URLs and receive prompt email notifications if a website is down. The application is built using Node.js with MongoDB as the database and React for the frontend.
 
-## Features Added
+## Website Link
+[Web Alert - URL Monitoring Application](https://web-alert-mern.vercel.app/)
+
+## Features
 
 ### User Authentication and Authorization
 - **Registration**: Users can register with their email, password, and other details.
@@ -26,7 +32,7 @@ MongoDB as the database and React for the frontend.
   - `User` model includes fields for user details.
   - `Organization` model includes fields for organization name, URL, owner, and users, with URL uniqueness enforced.
 - **Controllers**:
-  - **`organizationController.js`**: Handles creation of organizations, addition of users, and retrieval of user-specific organizations.
+  - **`organizationController.js`**: Handles the creation of organizations, the addition of users, and the retrieval of user-specific organizations.
 - **Routes**:
   - **`organizationRoutes.js`**: Manages routes for organization creation, user addition, and fetching organizations.
 - **Server Configuration**: Sets up routes, middleware, and MongoDB connection.
@@ -36,6 +42,9 @@ MongoDB as the database and React for the frontend.
   - Displays a form for creating new organizations.
   - Lists existing organizations with options to add users.
   - Refreshes the list of organizations after each creation or update.
+
+### Email Notifications
+- **Notification System**: Users receive email notifications if any URL within their organization goes down.
 
 ## Application Flow
 
@@ -61,3 +70,14 @@ MongoDB as the database and React for the frontend.
 1. **Enhanced Validation**: Implement more robust validation for user inputs, such as checking URL formats and ensuring organization names are unique across all users.
 2. **User Role Management**: Add roles and permissions to manage different types of access within organizations.
 3. **UI/UX Improvements**: Enhance the user interface and user experience with better design and interactive elements.
+
+## Additional Information
+
+- **MongoDB Atlas**: Used for cloud storage.
+- **Email Notifications**: Implemented to notify users when a URL is down.
+
+
+
+---
+
+You can update your README file with this content to reflect the latest changes and features of your project.
