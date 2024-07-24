@@ -24,6 +24,7 @@ This project involves creating a web application where users can monitor URLs, c
 ### Organizations Management
 - **Creating Organizations**: Each organization is associated with a unique URL and the owner's ID. The URL must be unique across all organizations for a given user.
 - **Adding Users to Organizations**: Users can add other users to their organizations, ensuring that the user being added exists and isn't already part of the organization.
+- **Deleting Organizations**: Users can delete their organizations, which removes the organization and its associated data from the system.
 
 ### Backend Setup
 - **Models**:
@@ -72,10 +73,4 @@ This project involves creating a web application where users can monitor URLs, c
 ## Additional Information
 
 - **MongoDB Atlas**: Used for cloud storage.
-- **Email Notifications**: Implemented to notify users when a URL is down.
-
-
-
----
-
-You can update your README file with this content to reflect the latest changes and features of your project.
+- **Email Notifications**: Implemented to notify users when a URL is down through nodemailer.
