@@ -24,15 +24,15 @@ const HomePage = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[url('./src/assets/background.jpg')] bg-cover ">
+    <div className="flex flex-col min-h-screen bg-[url('./assets/background.jpg')] bg-cover ">
       {/* Navbar */}
       <nav className="w-full bg-gray-900/50">
         <div className="w-full max-w-6xl mx-auto p-6 flex justify-between items-center">
           {/* Logo Section */}
           <div className="flex items-center">
-            <img src="./src/assets/logo.png" className="h-12" alt="Logo" />
+            <img src="./assets/logo.png" className="h-12" alt="Logo" />
             <img
-              src="./src/assets/logo-text.png"
+              src="./assets/logo-text.png"
               className="h-8 ml-3"
               alt="Logo Text"
             />
@@ -129,7 +129,7 @@ const HomePage = () => {
           {/* Image Section */}
           <div className="flex-1">
             <img
-              src="./src/assets/landing-image.jpg"
+              src="./assets/landing-image.jpg"
               alt="Monitoring"
               className="w-full max-w-md rounded-2xl"
             />

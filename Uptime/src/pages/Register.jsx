@@ -36,10 +36,10 @@ const Register = () => {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[url('./src/assets/background.jpg')] bg-cover">
+    <div className="flex items-center justify-center min-h-screen bg-[url('./assets/background.jpg')] bg-cover">
       <Link to="/">
         <img
-          src="./src/assets/logo.png"
+          src="./assets/logo.png"
           className="absolute top-0 left-0 h-16"
           alt="logo"
         />
@@ -127,7 +127,7 @@ const Register = () => {
         {/* Right Side: Image */}
         <div className="md:w-1/2 w-full h-full">
           <img
-            src="./src/assets/register.jpg"
+            src="./assets/register.jpg"
             alt="Register"
             className="object-cover rounded-lg mb-4 md:mb-0 md:m-8 w-80vw md:h-[80vh]"
           />
