@@ -36,7 +36,7 @@ const Register = () => {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[url('./assets/background.jpg')] bg-cover">
+    <div className="flex items-center justify-center min-h-screen bg-[url('./src/assets/background.jpg')] bg-cover">
       <Link to="/">
         <img
           src="./src/assets/logo.png"

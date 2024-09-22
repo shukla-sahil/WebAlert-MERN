@@ -172,7 +172,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen p-4 bg-[url(./assets/background.jpg)]">
+    <div className="flex flex-col items-center min-h-screen p-4 bg-[url(./src/assets/background.jpg)]">
       <ToastContainer /> {/* Add ToastContainer here */}
       <Link to="/" className="relative lg:absolute w-full pt-4 md:pt-0 ">
         <img

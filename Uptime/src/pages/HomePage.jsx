@@ -24,7 +24,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[url('./assets/background.jpg')] bg-cover ">
+    <div className="flex flex-col min-h-screen bg-[url('./src/assets/background.jpg')] bg-cover ">
       {/* Navbar */}
       <nav className="w-full bg-gray-900/50">
         <div className="w-full max-w-6xl mx-auto p-6 flex justify-between items-center">
