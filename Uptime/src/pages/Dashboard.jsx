@@ -175,7 +175,7 @@ const Dashboard = () => {
     <div className="flex flex-col items-center min-h-screen p-4 bg-[url(./assets/background.jpg)]">
       <ToastContainer /> {/* Add ToastContainer here */}
       <Link to="/" className="relative lg:absolute w-full pt-4 md:pt-0 ">
-        <img src="./assets/logo.png" className="top-0 left-0 h-16" alt="logo" />
+        <img src="/assets/logo.png" className="top-0 left-0 h-16" alt="logo" />
       </Link>
       <div className="w-full max-w-3xl flex justify-between items-center mb-8">
         <h1 className="text-4xl font-bold text-white">
