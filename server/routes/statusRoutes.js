@@ -11,11 +11,13 @@ router.post('/check-status', async (req, res) => {
     await Promise.all(organizations.map(async (org) => {
         // Check if the organization has maintenance windows and if it is currently in a maintenance window
         if (org.maintenanceWindows && Array.isArray(org.maintenanceWindows)) {
+            console.log("in check");
             const isUnderMaintenance = org.maintenanceWindows.some(window =>
                 currentTime >= new Date(window.start) && currentTime <= new Date(window.end)
             );
 
             if (isUnderMaintenance) {
+                console.log("setting maintainenece");
                 status[org._id] = 'maintenance';
                 return;
             }
