@@ -91,7 +91,7 @@ exports.deleteOrganization = async (req, res) => {
   }
 };
 exports.addMaintenanceWindow = async (req, res) => {
-  const { start, end } = req.body;
+  const { start, end } = req.body; // Input should be in IST format
   const { orgId } = req.params;
 
   try {
@@ -101,12 +101,8 @@ exports.addMaintenanceWindow = async (req, res) => {
       return res.status(404).json({ message: 'Organization not found' });
     }
 
-    // Convert start and end times to UTC if they are in IST
-    const startUTC = new Date(start); // Assuming 'start' is in a string format and will be parsed correctly
-    const endUTC = new Date(end); // Same for 'end'
-
-    // Ensure the times are in UTC before storing
-    organization.maintenanceWindows.push({ start: startUTC, end: endUTC });
+    // Add the maintenance window directly
+    organization.maintenanceWindows.push({ start, end });
     await organization.save();
 
     res.status(200).json({ message: 'Maintenance window added successfully' });

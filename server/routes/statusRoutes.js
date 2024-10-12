@@ -13,29 +13,24 @@ const convertToIST = (utcDate) => {
 router.post('/check-status', async (req, res) => {
     const { organizations } = req.body;
     const status = {};
+    const currentTime = new Date();
 
-    // Get the current time in UTC and convert it to IST
-    const currentTimeUTC = new Date();
-    const currentTimeIST = convertToIST(currentTimeUTC);
-
-    console.log("Current Time in IST:", currentTimeIST);
+    // Convert current time to IST
+    const istOffset = 5.5 * 60 * 60 * 1000; // IST offset in milliseconds
+    const currentIST = new Date(currentTime.getTime() + istOffset);
 
     await Promise.all(organizations.map(async (org) => {
         // Check if the organization has maintenance windows and if it is currently in a maintenance window
         if (org.maintenanceWindows && Array.isArray(org.maintenanceWindows)) {
             const isUnderMaintenance = org.maintenanceWindows.some(window => {
-                // Convert both start and end times of the maintenance window to IST
-                const maintenanceStartIST = convertToIST(window.start);
-                const maintenanceEndIST = convertToIST(window.end);
+                const windowStartIST = new Date(window.start).getTime() + istOffset; // Convert to IST
+                const windowEndIST = new Date(window.end).getTime() + istOffset; // Convert to IST
 
-                console.log("Maintenance Start in IST:", maintenanceStartIST);
-                console.log("Maintenance End in IST:", maintenanceEndIST);
-
-                return currentTimeIST >= maintenanceStartIST && currentTimeIST <= maintenanceEndIST;
+                // Compare with current time in IST
+                return currentIST.getTime() >= windowStartIST && currentIST.getTime() <= windowEndIST;
             });
 
             if (isUnderMaintenance) {
-                console.log("Setting status to maintenance for org:", org._id);
                 status[org._id] = 'maintenance';
                 return;
             }
