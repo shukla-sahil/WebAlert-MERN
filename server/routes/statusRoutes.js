@@ -2,13 +2,21 @@ const express = require('express');
 const axios = require('axios');
 const router = express.Router();
 
+// Function to convert UTC time to IST by adding 5 hours and 30 minutes
+const convertToIST = (utcDate) => {
+    const date = new Date(utcDate);
+    date.setHours(date.getHours() + 5);
+    date.setMinutes(date.getMinutes() + 30);
+    return date;
+};
+
 router.post('/check-status', async (req, res) => {
     const { organizations } = req.body;
     const status = {};
 
-    // Get the current time in UTC and convert to IST
+    // Get the current time in UTC and convert it to IST
     const currentTimeUTC = new Date();
-    const currentTimeIST = new Date(currentTimeUTC.toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }));
+    const currentTimeIST = convertToIST(currentTimeUTC);
 
     console.log("Current Time in IST:", currentTimeIST);
 
@@ -17,8 +25,8 @@ router.post('/check-status', async (req, res) => {
         if (org.maintenanceWindows && Array.isArray(org.maintenanceWindows)) {
             const isUnderMaintenance = org.maintenanceWindows.some(window => {
                 // Convert both start and end times of the maintenance window to IST
-                const maintenanceStartIST = new Date(new Date(window.start).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }));
-                const maintenanceEndIST = new Date(new Date(window.end).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }));
+                const maintenanceStartIST = convertToIST(window.start);
+                const maintenanceEndIST = convertToIST(window.end);
 
                 console.log("Maintenance Start in IST:", maintenanceStartIST);
                 console.log("Maintenance End in IST:", maintenanceEndIST);
