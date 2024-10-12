@@ -339,6 +339,7 @@ const Dashboard = () => {
                   >
                     Delete Organization
                   </button>
+                  <span className="text-red-600 font-semibold">currently there is a timezone mismatch while setting maintenance</span>
                 </div>
               )}
             </div>
