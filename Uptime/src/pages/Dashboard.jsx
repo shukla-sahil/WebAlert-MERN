@@ -74,6 +74,7 @@ const Dashboard = () => {
           organizations: orgs,
         }
       );
+      console.log(response.data);
       setOrgStatus(response.data);
     } catch (error) {
       console.error("Error checking organization status:", error);
