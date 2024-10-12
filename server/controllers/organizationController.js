@@ -27,7 +27,7 @@ exports.createOrganization = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-};  
+};
 // Add user to organization
 exports.addUserToOrganization = async (req, res) => {
   const { username, orgId } = req.body;
@@ -86,6 +86,43 @@ exports.deleteOrganization = async (req, res) => {
     await Organization.findByIdAndDelete(orgId);
 
     res.status(200).json({ message: 'Organization deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+exports.addMaintenanceWindow = async (req, res) => {
+  const { start, end } = req.body;
+  const { orgId } = req.params;
+
+  try {
+    // Find the organization
+    const organization = await Organization.findById(orgId);
+    if (!organization) {
+      return res.status(404).json({ message: 'Organization not found' });
+    }
+
+    // Add the maintenance window
+    organization.maintenanceWindows.push({ start, end });
+    await organization.save();
+
+    res.status(200).json({ message: 'Maintenance window added successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getMaintenanceWindows = async (req, res) => {
+  const { orgId } = req.params;
+
+  try {
+    // Find the organization
+    const organization = await Organization.findById(orgId);
+    if (!organization) {
+      return res.status(404).json({ message: 'Organization not found' });
+    }
+
+    // Return the maintenance windows
+    res.status(200).json(organization.maintenanceWindows);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

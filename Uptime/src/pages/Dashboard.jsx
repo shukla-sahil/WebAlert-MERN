@@ -13,6 +13,8 @@ const Dashboard = () => {
   const [usernames, setUsernames] = useState({});
   const [currentUser, setCurrentUser] = useState("");
   const [orgStatus, setOrgStatus] = useState({});
+  const [maintenanceStart, setMaintenanceStart] = useState({});
+  const [maintenanceEnd, setMaintenanceEnd] = useState({});
 
   const navigate = useNavigate();
 
@@ -170,7 +172,39 @@ const Dashboard = () => {
       return false;
     }
   };
+  const handleSetMaintenance = async (orgId) => {
+    try {
+      const response = await axios.post(
+        `https://webalert-mern.onrender.com/api/organizations/${orgId}/set-maintenance`,
+        {
+          start: maintenanceStart[orgId],
+          end: maintenanceEnd[orgId]
+        },
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        }
+      );
 
+      console.log('Maintenance window added successfully:', response.data);
+      await fetchOrganizations(); // Refresh organizations list and statuses
+    } catch (error) {
+      console.error('Failed to set maintenance period:', error);
+      alert(error.response?.data?.message || 'Failed to set maintenance period');
+    }
+  };
+  const getMaintenanceWindows = async (orgId) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/organizations/${orgId}/get-maintenance`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
+
+      console.log('Maintenance windows:', response.data);
+      // Store or display maintenance windows based on your requirements
+    } catch (error) {
+      console.error('Failed to fetch maintenance windows:', error);
+      alert(error.response?.data?.message || 'Failed to fetch maintenance windows');
+    }
+  };
   return (
     <div className="flex flex-col items-center min-h-screen p-4 bg-[url(/background.jpg)]">
       <ToastContainer /> {/* Add ToastContainer here */}
@@ -237,9 +271,12 @@ const Dashboard = () => {
                   className={classNames({
                     "text-green-500": orgStatus[org._id] === "live",
                     "text-red-500": orgStatus[org._id] === "down",
+                    'text-yellow-500': orgStatus[org._id] === 'maintenance',
                   })}
                 >
-                  {orgStatus[org._id] === "live" ? "🟢 Live" : "🔴 Down"}
+                  {orgStatus[org._id] === 'live' && '🟢 Live'}
+                  {orgStatus[org._id] === 'down' && '🔴 Down'}
+                  {orgStatus[org._id] === 'maintenance' && '🟡 Under Maintenance'}
                 </span>
               </div>
               <p className="text-gray-400">
@@ -265,6 +302,36 @@ const Dashboard = () => {
                   >
                     Add User
                   </button>
+                  {/* Maintenance Start Time Input */}
+                  <input
+                    type="datetime-local"
+                    value={maintenanceStart[org._id] || ''}
+                    onChange={(e) =>
+                      setMaintenanceStart({ ...maintenanceStart, [org._id]: e.target.value })
+                    }
+                    placeholder="Maintenance Start"
+                    className="p-2 border border-gray-700 bg-gray-800 text-white rounded-lg shadow-sm"
+                  />
+
+                  {/* Maintenance End Time Input */}
+                  <input
+                    type="datetime-local"
+                    value={maintenanceEnd[org._id] || ''}
+                    onChange={(e) =>
+                      setMaintenanceEnd({ ...maintenanceEnd, [org._id]: e.target.value })
+                    }
+                    placeholder="Maintenance End"
+                    className="p-2 border border-gray-700 bg-gray-800 text-white rounded-lg shadow-sm"
+                  />
+
+                  {/* Set Maintenance Button */}
+                  <button
+                    onClick={() => handleSetMaintenance(org._id)}
+                    className="py-2 bg-yellow-500 text-white rounded-lg shadow-lg hover:bg-yellow-600"
+                  >
+                    Set Maintenance
+                  </button>
+
                   <button
                     onClick={() => handleDeleteOrganization(org._id)}
                     className="py-2 bg-sky-950/30 border-2 border-sky-950 text-white rounded-lg shadow-lg hover:bg-sky-800/50"

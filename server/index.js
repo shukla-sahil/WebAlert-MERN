@@ -24,15 +24,26 @@ app.use('/api/organizations', organizationRoutes);
 app.use('/api/status', statusRoutes);
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, { 
-  useNewUrlParser: true, 
-  useUnifiedTopology: true 
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 })
-.then(() => console.log('MongoDB connected'))
-.catch(err => {
-  console.error('MongoDB connection error:', err);
-  process.exit(1);
-});
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => {
+    console.error('MongoDB connection error:', err);
+    process.exit(1);
+  });
+// Helper function to check if the current time is within any maintenance window
+const isWithinMaintenanceWindow = (maintenanceWindows) => {
+  if (!maintenanceWindows || !Array.isArray(maintenanceWindows)) {
+    return false; // Return false if maintenanceWindows is undefined or not an array
+  }
+
+  const currentTime = new Date();
+  return maintenanceWindows.some(window =>
+    currentTime >= new Date(window.start) && currentTime <= new Date(window.end)
+  );
+};
 
 // Define the checkUrlStatus function
 const checkUrlStatus = async () => {
@@ -40,7 +51,14 @@ const checkUrlStatus = async () => {
     const organizations = await Organization.find({}).populate('users');
 
     for (const org of organizations) {
+      // Check if the current time is within a maintenance window
+      if (isWithinMaintenanceWindow(org.maintenanceWindows)) {
+        console.log(`Skipping monitoring for ${org.url} due to scheduled maintenance.`);
+        continue; // Skip this iteration and continue with the next organization
+      }
+
       try {
+        //Perform URL check
         const response = await axios.get(org.url);
         if (response.status !== 200) {
           await handleUrlDown(org);
