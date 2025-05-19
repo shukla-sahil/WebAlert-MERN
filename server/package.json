@@ -16,6 +16,8 @@
     "mongoose": "^8.5.1",
     "nodemailer": "^6.9.14",
     "nodemon": "^3.1.6",
-    "schedule": "^0.5.0"
+    "puppeteer": "^24.8.2",
+    "schedule": "^0.5.0",
+    "WebAlert": "file:"
   }
 }
