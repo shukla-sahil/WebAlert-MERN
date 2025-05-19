@@ -10,6 +10,8 @@ const statusRoutes = require('./routes/statusRoutes');
 const sendEmail = require('./controllers/mailer');
 const FailureCount = require('./models/FailureCount');
 const Organization = require('./models/Organization');
+const puppeteer = require("puppeteer") ;
+
 
 const app = express();
 
@@ -59,8 +61,9 @@ const checkUrlStatus = async () => {
 
       try {
         //Perform URL check
-        const response = await axios.get(org.url);
-        if (response.status !== 200) {
+            const response = await checkStatusWithPuppeteer(org.url);
+        console.log(`Checked ${org.url}: ${response}`);
+        if (response != 'live') {
           await handleUrlDown(org);
         }
       } catch (error) {
@@ -82,6 +85,30 @@ const handleUrlDown = async (org) => {
 
 // Set an interval to check URLs every 4 minutes
 setInterval(checkUrlStatus, 240000); // 4 minutes in milliseconds
+
+let browserInstance = null;
+
+// Initialize Puppeteer (Single Instance)
+const initPuppeteer = async () => {
+    if (!browserInstance) {
+        browserInstance = await puppeteer.launch({ headless: true });
+    }
+    return browserInstance;
+};
+
+const checkStatusWithPuppeteer = async (url) => {
+    try {
+        const browser = await initPuppeteer();
+        const page = await browser.newPage();
+        await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 5000 });
+        console.log(`${url} is up`);
+        await page.close(); // Close only the page, not the browser
+        return 'live';
+    } catch (error) {
+        console.error(`${url} might be down:`, error.message);
+        return 'down';
+    }
+};
 
 // Start the Express server
 app.listen(process.env.PORT || 5000, () => {
